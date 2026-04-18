@@ -9,7 +9,7 @@ import {
   Terminal as TerminalIcon, Sparkles, Code
 } from 'lucide-react';
 import type { Blueprint, Variables } from '@/lib/types';
-import { PocketFlow, ArchitectNode, BatchFillerNode, FinalizerNode } from '@/lib/flow';
+import { PocketFlow, ResearchNode, ArchitectNode, BatchFillerNode, FinalizerNode } from '@/lib/flow';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import ReactMarkdown from 'react-markdown';
@@ -81,7 +81,7 @@ export default function Home() {
       flow.addNode(ResearchNode(prompt));
       
       // Node 1: Architect (A1)
-      flow.addNode(ArchitectNode(prompt, "gemini-3.1-pro-preview"));
+      flow.addNode(ArchitectNode(prompt, "gemini-1.5-pro"));
       
       const intermediate = await flow.run(
         (id) => { 
@@ -94,12 +94,16 @@ export default function Home() {
       
       setDoneNodes(prev => new Set(prev).add('architect'));
 
-      const pages = intermediate.blueprint.contentPages || [];
-      flow.addNode(BatchFillerNode("LEAD-1 (CORE)", [0, 1, 2], "gemini-3-flash-preview"));
-      flow.addNode(BatchFillerNode("LEAD-2 (SERVICES)", [3, 4, 5], "gemini-3-flash-preview"));
-      flow.addNode(BatchFillerNode("LEAD-3 (EXPERT)", [6, 7, 8], "gemini-3-flash-preview"));
-      flow.addNode(BatchFillerNode("BULK-1 (SEO)", [9, 10, 11], "gemini-3.1-flash-lite-preview"));
-      flow.addNode(BatchFillerNode("BULK-2 (DATA)", [12, 13, 14], "gemini-3.1-flash-lite-preview"));
+      const pages = intermediate?.blueprint?.contentPages || [];
+      if (pages.length === 0) {
+        throw new Error("Blueprint generation failed: no pages found.");
+      }
+
+      flow.addNode(BatchFillerNode("LEAD-1 (CORE)", [0, 1, 2], "gemini-1.5-flash"));
+      flow.addNode(BatchFillerNode("LEAD-2 (SERVICES)", [3, 4, 5], "gemini-1.5-flash"));
+      flow.addNode(BatchFillerNode("LEAD-3 (EXPERT)", [6, 7, 8], "gemini-1.5-flash"));
+      flow.addNode(BatchFillerNode("BULK-1 (SEO)", [9, 10, 11], "gemini-1.5-flash"));
+      flow.addNode(BatchFillerNode("BULK-2 (DATA)", [12, 13, 14], "gemini-1.5-flash"));
       flow.addNode(FinalizerNode());
 
       const finalStore = await flow.run(

@@ -1,0 +1,75 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://numerokarma.fr/#website",
+      "url": "https://numerokarma.fr/",
+      "name": "NK Éveil",
+      "inLanguage": "fr-FR",
+      "publisher": {
+        "@id": "https://numerokarma.fr/#organization"
+      }
+    },
+    {
+      "@type": [
+        "LocalBusiness",
+        "ProfessionalService",
+        "Organization"
+      ],
+      "@id": "https://numerokarma.fr/#organization",
+      "name": "NK Éveil",
+      "url": "https://numerokarma.fr/",
+      "image": [],
+      "priceRange": "$$",
+      "vatID": "FR00000000000",
+      "taxID": "000 000 000 00000",
+      "foundingDate": "2015-01-01",
+      "areaServed": [
+        "France"
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:00",
+          "closes": "18:00"
+        }
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "15"
+      },
+      "review": [],
+      "knowsAbout": [
+        "Expertise SEO",
+        "Conseil Technique",
+        "Marketing Digital"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Services",
+        "itemListElement": []
+      },
+      "sameAs": []
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://numerokarma.fr/#webpage-home",
+      "url": "https://numerokarma.fr/",
+      "isPartOf": {
+        "@id": "https://numerokarma.fr/#website"
+      },
+      "about": {
+        "@id": "https://numerokarma.fr/#organization"
+      }
+    }
+  ]
+}

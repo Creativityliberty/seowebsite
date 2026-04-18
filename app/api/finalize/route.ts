@@ -22,7 +22,28 @@ export async function POST(req: Request) {
 
     const generatedFiles = generateAllFiles(blueprint, variables);
     
-    return NextResponse.json({ generatedFiles });
+    // PERSISTENCE (Local only)
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const baseDir = path.join(process.cwd(), 'generated');
+
+      Object.entries(generatedFiles).forEach(([filePath, content]) => {
+        const fullPath = path.join(baseDir, filePath);
+        const dir = path.dirname(fullPath);
+        
+        if (!fs.existsSync(dir)) {
+          fs.mkdirSync(dir, { recursive: true });
+        }
+        
+        fs.writeFileSync(fullPath, content);
+      });
+      console.log(">>> [FINALIZE] Pack persisted to:", baseDir);
+    } catch (saveError) {
+      console.warn(">>> [FINALIZE] Save to disk skipped (likely serverless environment)");
+    }
+    
+    return NextResponse.json({ success: true, generatedFiles });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

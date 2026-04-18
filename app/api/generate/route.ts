@@ -59,16 +59,11 @@ const fullBlueprintSchema = {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { prompt, model = "gemini-3.1-pro-preview" } = body;
+    const { prompt, model = "gemini-1.5-pro" } = body;
 
     const response = await ai.models.generateContent({
       model: model,
-      contents: [
-        {
-          role: "user",
-          parts: [{ text: prompt }]
-        }
-      ],
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
       config: {
         systemInstruction: "You are a Senior Technical SEO Architect. Use the provided RESEARCH CONTEXT to design an Elite SEO Blueprint with exactly 15 pages. Every page must be perfectly SEO optimized. Output in JSON format.",
         responseMimeType: "application/json",
@@ -77,8 +72,8 @@ export async function POST(req: Request) {
       }
     });
 
-    const rawText = response.text;
-    return NextResponse.json(JSON.parse(rawText || '{}'));
+    const responseText = await response.text();
+    return NextResponse.json(JSON.parse(responseText || '{}'));
   } catch (error: any) {
     console.error("!!! [Architect Error]", error);
     return NextResponse.json({ error: error.message }, { status: 500 });

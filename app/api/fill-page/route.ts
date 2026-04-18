@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     if (!apiKey) return NextResponse.json({ success: false, error: "API_KEY_MISSING" });
 
     const ai = new GoogleGenAI({ apiKey });
-    const { pages, blueprint, model = "gemini-3-flash-preview" } = await req.json();
+    const { pages, blueprint, model = "gemini-1.5-flash" } = await req.json();
     
     if (!pages || !Array.isArray(pages) || pages.length === 0) {
       return NextResponse.json({ success: false, error: "BATCH_INVALID" });
@@ -62,9 +62,8 @@ REQUIREMENTS:
       }
     });
 
-    if (!response.text) throw new Error("Réponse de l'IA vide.");
-
-    const data = JSON.parse(response.text);
+    const responseText = await response.text();
+    const data = JSON.parse(responseText || '{}');
     return NextResponse.json({ success: true, results: data.results });
   } catch (error: any) {
     console.error("!!! [Squad Error]", error);

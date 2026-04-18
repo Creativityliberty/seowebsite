@@ -8,22 +8,20 @@ const ai = new GoogleGenAI({ apiKey });
 
 export async function POST(req: Request) {
   try {
-    const { prompt } = await req.json();
+    const body = await req.json();
+    const { prompt, model = "gemini-1.5-pro" } = body;
     
-    // Use Flash for speed in research
-    const model = ai.models.get("gemini-3-flash-preview");
-    
-    const response = await model.generateContent({
-      contents: [{ role: "user", parts: [{ text: `Realise une recherche Google approfondie sur le sujet suivant et extrais :
-        1. Les 3 principaux concurrents (URLs).
-        2. Les 5 questions les plus posées (PPA).
-        3. Les tendances SEO actuelles.
-        
-        Sujet : ${prompt}` }] }],
-      tools: [{ googleSearchRetrieval: {} }]
+    const response = await ai.models.generateContent({
+      model: model, 
+      contents: [{ role: "user", parts: [{ text: `Recherche Google : ${prompt}` }] }],
+      config: {
+        systemInstruction: "Réalise une recherche approfondie et extrais les concurrents, les questions PPA et les tendances SEO.",
+        tools: [{ googleSearchRetrieval: {} }]
+      }
     });
 
-    return NextResponse.json({ success: true, research: response.text });
+    const responseText = await response.text();
+    return NextResponse.json({ success: true, research: responseText });
   } catch (error: any) {
     console.error("!!! [Research Error]", error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
