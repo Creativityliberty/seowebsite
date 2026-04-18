@@ -3,8 +3,7 @@ import { NextResponse } from "next/server";
 
 export const maxDuration = 60;
 
-const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || "";
-const ai = new GoogleGenAI({ apiKey });
+// Initialisation reportée dans le handler pour support Serverless/Vercel
 
 const fullBlueprintSchema = {
   type: "object",
@@ -58,8 +57,16 @@ const fullBlueprintSchema = {
 
 export async function POST(req: Request) {
   try {
+    const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || "";
+    if (!apiKey) {
+        console.error("!!! [Architect] API KEY IS MISSING");
+        return NextResponse.json({ error: "API_KEY_MISSING" }, { status: 500 });
+    }
+    const ai = new GoogleGenAI({ apiKey });
+    
     const body = await req.json();
     const { prompt, model = "gemini-1.5-pro" } = body;
+    console.log(">>> [Architect] Designing blueprint for:", prompt);
 
     const response = await ai.models.generateContent({
       model: model,

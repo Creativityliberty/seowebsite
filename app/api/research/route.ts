@@ -3,14 +3,20 @@ import { NextResponse } from "next/server";
 
 export const maxDuration = 60;
 
-const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || "";
-const ai = new GoogleGenAI({ apiKey });
-
 export async function POST(req: Request) {
   try {
+    const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || "";
+    if (!apiKey) {
+      console.error("!!! [Research] API KEY IS MISSING");
+      return NextResponse.json({ success: false, error: "API_KEY_MISSING" }, { status: 500 });
+    }
+
+    const ai = new GoogleGenAI({ apiKey });
     const body = await req.json();
-    const { prompt, model = "gemini-1.5-pro" } = body;
+    const { prompt, model = "gemini-1.5-flash" } = body;
     
+    console.log(">>> [Research] Starting A0 Grounding for:", prompt);
+
     const response = await ai.models.generateContent({
       model: model, 
       contents: [{ role: "user", parts: [{ text: `Recherche Google : ${prompt}` }] }],
