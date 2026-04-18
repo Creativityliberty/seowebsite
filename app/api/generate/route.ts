@@ -3,8 +3,6 @@ import { NextResponse } from "next/server";
 
 export const maxDuration = 60;
 
-// Initialisation reportée dans le handler pour support Serverless/Vercel
-
 const fullBlueprintSchema = {
   type: "object",
   properties: {
@@ -59,17 +57,20 @@ export async function POST(req: Request) {
   try {
     const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || "";
     if (!apiKey) {
-        console.error("!!! [Architect] API KEY IS MISSING");
-        return NextResponse.json({ error: "API_KEY_MISSING" }, { status: 500 });
+      console.error("!!! [Architect] API KEY IS MISSING");
+      return NextResponse.json({ error: "API_KEY_MISSING" }, { status: 500 });
     }
+
     const ai = new GoogleGenAI({ apiKey });
-    
     const body = await req.json();
     const { prompt, model = "gemini-1.5-pro" } = body;
+    
     console.log(">>> [Architect] Designing blueprint for:", prompt);
 
+    const modelName = model.includes('/') ? model : `models/${model}`;
+
     const response = await ai.models.generateContent({
-      model: model,
+      model: modelName,
       contents: [{ role: "user", parts: [{ text: prompt }] }],
       config: {
         systemInstruction: "You are a Senior Technical SEO Architect. Use the provided RESEARCH CONTEXT to design an Elite SEO Blueprint with exactly 15 pages. Every page must be perfectly SEO optimized. Output in JSON format.",
@@ -83,6 +84,10 @@ export async function POST(req: Request) {
     return NextResponse.json(JSON.parse(responseText || '{}'));
   } catch (error: any) {
     console.error("!!! [Architect Error]", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ 
+        error: error.message, 
+        stack: error.stack,
+        hint: `Model: ${modelName || 'unknown'}. Verify if JSON Schema mode is supported or if model is available.`
+    }, { status: 500 });
   }
 }

@@ -33,7 +33,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: "BATCH_INVALID" });
     }
 
-    const brandName = blueprint.brand?.name || "L'entreprise";
+    const brandName = blueprint?.brand?.name || "L'entreprise";
     const pageTargets = pages.map((p: any) => p.h1).join(", ");
 
     console.log(`>>> [SQUAD] Writing Batch: ${pageTargets} using ${model}`);
@@ -51,8 +51,10 @@ REQUIREMENTS:
 4. Return the result in a JSON array matched by routeName.
 `;
 
+    const modelName = model.includes('/') ? model : `models/${model}`;
+
     const response = await ai.models.generateContent({
-      model: model,
+      model: modelName,
       contents: [{ role: "user", parts: [{ text: "Proceed with the core batch writing." }] }],
       config: {
         systemInstruction: systemPrompt,
@@ -67,6 +69,10 @@ REQUIREMENTS:
     return NextResponse.json({ success: true, results: data.results });
   } catch (error: any) {
     console.error("!!! [Squad Error]", error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ 
+        success: false, 
+        error: error.message,
+        stack: error.stack
+    }, { status: 500 });
   }
 }

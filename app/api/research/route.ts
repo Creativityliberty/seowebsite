@@ -17,8 +17,10 @@ export async function POST(req: Request) {
     
     console.log(">>> [Research] Starting A0 Grounding for:", prompt);
 
+    const modelName = model.includes('/') ? model : `models/${model}`;
+
     const response = await ai.models.generateContent({
-      model: model, 
+      model: modelName, 
       contents: [{ role: "user", parts: [{ text: `Recherche Google : ${prompt}` }] }],
       config: {
         systemInstruction: "Réalise une recherche approfondie et extrais les concurrents, les questions PPA et les tendances SEO.",
@@ -30,6 +32,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true, research: responseText });
   } catch (error: any) {
     console.error("!!! [Research Error]", error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ 
+        success: false, 
+        error: error.message,
+        stack: error.stack,
+        hint: `Model: ${modelName || 'unknown'}. Verify if Google Search Grounding is active for this model.`
+    }, { status: 500 });
   }
 }
