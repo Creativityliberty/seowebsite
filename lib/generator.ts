@@ -98,11 +98,12 @@ function buildSitemapIndex(blueprint: Blueprint) {
 }
 
 function buildUrlSet(blueprint: Blueprint, routeNames: string[]) {
-  const baseUrl = normalizeBaseUrl(blueprint.project?.baseUrl);
-  const routes = (blueprint.routes || []).filter(r => routeNames.includes(r.name) && r.index !== false);
+  const baseUrl = normalizeBaseUrl(blueprint.project?.baseUrl || "");
+  const routes = (blueprint.routes || []).filter(r => r.name && routeNames.includes(r.name) && r.index !== false);
   
   const urls = routes.map(route => {
-    const loc = `${baseUrl}${route.path.startsWith('/') ? route.path : `/${route.path}`}`;
+    const rPath = route.path || "";
+    const loc = `${baseUrl}${rPath.startsWith('/') ? rPath : `/${rPath}`}`;
     return `  <url>\n    <loc>${xmlEscape(loc)}</loc>\n    <changefreq>${xmlEscape(route.changefreq || "monthly")}</changefreq>\n    <priority>${xmlEscape(route.priority ?? 0.5)}</priority>\n  </url>`;
   }).join("\n");
 
@@ -180,8 +181,8 @@ export function generateAllFiles(rawBlueprint: any, variables: Variables): Recor
 
   segments.forEach(seg => {
     const routeNames = (blueprint.routes || [])
-      .filter(r => r.pageType === seg.type || r.name.includes(seg.type) || (seg.type === 'page' && !r.pageType))
-      .map(r => r.name);
+      .filter(r => r.name && (r.pageType === seg.type || r.name.includes(seg.type) || (seg.type === 'page' && !r.pageType)))
+      .map(r => r.name as string);
     
     // Génération systématique même si vide
     files[`public/sitemaps/${seg.name}`] = buildUrlSet(blueprint, routeNames);
