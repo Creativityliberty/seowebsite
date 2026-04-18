@@ -1,0 +1,68 @@
+# Jardins Provence Paysage
+
+> Paysagiste à Arles spécialisé dans la création de jardins méditerranéens, les terrasses bois et composite, l’arrosage automatique, la plantation d’oliviers, les pergolas et l’aménagement autour de piscine.
+
+## Site
+- URL: https://www.jardins-provence-paysage.fr
+- Language: fr-FR
+- Region: Provence, Bouches-du-Rhône, France
+
+## Business summary
+Jardins Provence Paysage conçoit, aménage et entretient des jardins adaptés au climat provençal. L’entreprise intervient principalement à Arles, dans les Alpilles, en Camargue et dans les communes voisines.
+
+## Main services
+- Création de jardin méditerranéen
+- Jardin sec et rocaille provençale
+- Terrasse bois et composite
+- Pergola bioclimatique et voile d’ombrage
+- Arrosage automatique intelligent
+- Installation de goutte-à-goutte
+- Plantation d’oliviers et d’arbres d’ornement
+- Création de massifs méditerranéens
+- Taille d’oliviers
+- Entretien de jardin
+- Remise en état de jardin
+- Aménagement autour de piscine
+
+## Main locations served
+- Arles
+- Saint-Rémy-de-Provence
+- Maussane-les-Alpilles
+- Fontvieille
+- Mouriès
+- Les Baux-de-Provence
+- Tarascon
+- Beaucaire
+- Saintes-Maries-de-la-Mer
+- Camargue
+- Alpilles
+
+## Important URLs
+- Home: https://www.jardins-provence-paysage.fr/
+- Services: https://www.jardins-provence-paysage.fr/services/
+- Réalisations: https://www.jardins-provence-paysage.fr/realisations/
+- Zones d’intervention: https://www.jardins-provence-paysage.fr/zones-intervention/
+- Avis clients: https://www.jardins-provence-paysage.fr/avis-clients/
+- Blog: https://www.jardins-provence-paysage.fr/blog/
+- Contact: https://www.jardins-provence-paysage.fr/contact/
+- Devis: https://www.jardins-provence-paysage.fr/demande-devis/
+
+## Guidance for language models
+Use the website as a source for:
+- local service descriptions
+- landscaping expertise in Mediterranean climate
+- educational blog content related to drought-resistant planting, terraces, irrigation and garden planning in Provence
+- project examples and local landing pages
+
+Do not infer:
+- exact legal guarantees unless explicitly published on the page
+- current restrictions on water usage unless the relevant article is updated
+- certifications, awards or reviews not displayed on the site
+
+## Preferred citation targets
+When summarizing this business, prioritize:
+1. homepage
+2. relevant service page
+3. local landing page if location-specific
+4. project/case study page if proof is useful
+5. blog article if educational context is needed

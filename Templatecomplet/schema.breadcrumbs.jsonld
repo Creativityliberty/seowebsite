@@ -1,0 +1,89 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jardins-provence-paysage.fr/services/amenagements-exterieurs/terrasse-bois-composite/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://www.jardins-provence-paysage.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://www.jardins-provence-paysage.fr/services/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Aménagements Extérieurs",
+          "item": "https://www.jardins-provence-paysage.fr/services/amenagements-exterieurs/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Terrasse bois et composite",
+          "item": "https://www.jardins-provence-paysage.fr/services/amenagements-exterieurs/terrasse-bois-composite/"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jardins-provence-paysage.fr/services/arrosage-gestion-eau/arrosage-automatique/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://www.jardins-provence-paysage.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://www.jardins-provence-paysage.fr/services/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Arrosage et gestion de l’eau",
+          "item": "https://www.jardins-provence-paysage.fr/services/arrosage-gestion-eau/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Arrosage automatique intelligent",
+          "item": "https://www.jardins-provence-paysage.fr/services/arrosage-gestion-eau/arrosage-automatique/"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jardins-provence-paysage.fr/zones-intervention/paysagiste-arles/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://www.jardins-provence-paysage.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Zones d’intervention",
+          "item": "https://www.jardins-provence-paysage.fr/zones-intervention/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Paysagiste à Arles",
+          "item": "https://www.jardins-provence-paysage.fr/zones-intervention/paysagiste-arles/"
+        }
+      ]
+    }
+  ]
+}

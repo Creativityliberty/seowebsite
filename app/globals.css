@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  --color-canvas: #f0fdf4; /* Light green tint */
+  --color-ink: #064e3b; /* Dark emerald */
+  --color-glass: rgba(255, 255, 255, 0.6);
+  --color-glass-border: rgba(255, 255, 255, 0.3);
+}
+
+body {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  background-attachment: fixed;
+  color: var(--color-ink);
+  min-height: 100vh;
+}
+
+@layer utilities {
+  .glass-panel {
+    background: var(--color-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-glass-border);
+    box-shadow: 0 8px 32px rgba(6, 78, 59, 0.05);
+  }
+}

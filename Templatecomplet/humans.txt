@@ -1,0 +1,19 @@
+/* TEAM */
+Company: Jardins Provence Paysage
+Site: https://www.jardins-provence-paysage.fr
+Location: Arles, Bouches-du-Rhône, France
+Sector: Paysagisme / Aménagement extérieur / Jardin méditerranéen
+
+/* SITE */
+Standards: HTML5, CSS3, JSON-LD, Open Graph, Sitemap XML
+Language: Français (fr-FR)
+Architecture: SEO local + pages services + réalisations + blog
+CMS / Stack: À définir
+Schema: LocalBusiness, Service, FAQPage, Article, Review, BreadcrumbList
+
+/* CONTACT */
+Email: contact@jardins-provence-paysage.fr
+Phone: +33 6 78 92 34 56
+
+/* THANKS */
+Merci aux artisans du terrain, aux clients patients, et au mistral pour les tests de résistance non sollicités.

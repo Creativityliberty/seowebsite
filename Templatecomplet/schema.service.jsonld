@@ -1,0 +1,466 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.jardins-provence-paysage.fr/#website",
+      "url": "https://www.jardins-provence-paysage.fr/",
+      "name": "Jardins Provence Paysage",
+      "alternateName": "Jardins Provence",
+      "description": "Paysagiste à Arles spécialisé en création de jardins méditerranéens, terrasses, arrosage automatique, plantations et aménagements extérieurs.",
+      "inLanguage": "fr-FR",
+      "publisher": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      }
+    },
+    {
+      "@type": [
+        "LocalBusiness",
+        "ProfessionalService",
+        "HomeAndConstructionBusiness",
+        "LandscapeDesigner"
+      ],
+      "@id": "https://www.jardins-provence-paysage.fr/#organization",
+      "name": "Jardins Provence Paysage",
+      "alternateName": "Jardins Provence",
+      "url": "https://www.jardins-provence-paysage.fr/",
+      "logo": "https://www.jardins-provence-paysage.fr/assets/logo-jardins-provence-paysage.png",
+      "image": [
+        "https://www.jardins-provence-paysage.fr/assets/hero-jardin-mediterraneen.jpg",
+        "https://www.jardins-provence-paysage.fr/assets/projet-piscine-arles.jpg",
+        "https://www.jardins-provence-paysage.fr/assets/terrasse-composite-maussane.jpg"
+      ],
+      "description": "Entreprise de paysagisme basée à Arles, spécialisée dans la création de jardins méditerranéens, l’aménagement autour de piscine, les terrasses bois et composite, l’arrosage automatique, les plantations d’oliviers et l’entretien de jardin.",
+      "telephone": "+33678923456",
+      "email": "contact@jardins-provence-paysage.fr",
+      "priceRange": "€€",
+      "slogan": "Votre paysagiste créateur de jardins méditerranéens depuis 15 ans",
+      "foundingDate": "2009",
+      "vatID": "FR45823456789",
+      "taxID": "82345678900015",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "34 Avenue Victor Hugo",
+        "addressLocality": "Arles",
+        "postalCode": "13200",
+        "addressRegion": "Bouches-du-Rhône",
+        "addressCountry": "FR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.6772,
+        "longitude": 4.6272
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Arles"
+        },
+        {
+          "@type": "City",
+          "name": "Saint-Rémy-de-Provence"
+        },
+        {
+          "@type": "City",
+          "name": "Maussane-les-Alpilles"
+        },
+        {
+          "@type": "City",
+          "name": "Fontvieille"
+        },
+        {
+          "@type": "City",
+          "name": "Mouriès"
+        },
+        {
+          "@type": "City",
+          "name": "Les Baux-de-Provence"
+        },
+        {
+          "@type": "City",
+          "name": "Tarascon"
+        },
+        {
+          "@type": "City",
+          "name": "Beaucaire"
+        },
+        {
+          "@type": "City",
+          "name": "Saintes-Maries-de-la-Mer"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Camargue"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Alpilles"
+        }
+      ],
+      "sameAs": [
+        "https://facebook.com/jardinsprovencepaysage",
+        "https://instagram.com/jardinsprovencepaysage",
+        "https://linkedin.com/company/jardinsprovencepaysage",
+        "https://pinterest.com/jardinsprovence"
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "08:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "09:00",
+          "closes": "13:00"
+        }
+      ],
+      "knowsAbout": [
+        "Création de jardin méditerranéen",
+        "Jardin sec",
+        "Terrasse bois",
+        "Terrasse composite",
+        "Pergola bioclimatique",
+        "Arrosage automatique",
+        "Plantation d’oliviers",
+        "Massifs méditerranéens",
+        "Aménagement autour de piscine",
+        "Entretien de jardin"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Services paysagers",
+        "itemListElement": [
+          {
+            "@type": "OfferCatalog",
+            "name": "Création de Jardin",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-amenagement-jardin-mediterraneen"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-jardin-sec"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-gazon-synthetique"
+                }
+              }
+            ]
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Aménagements Extérieurs",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-terrasse"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-pergola"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-eclairage"
+                }
+              }
+            ]
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Gestion de l’Eau",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-arrosage"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-goutte-a-goutte"
+                }
+              }
+            ]
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Plantation et Entretien",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-plantation-oliviers"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-taille-oliviers"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": 5,
+        "reviewCount": 5,
+        "bestRating": 5,
+        "worstRating": 5
+      },
+      "review": [
+        {
+          "@id": "https://www.jardins-provence-paysage.fr/#review-sylvie-bonnet"
+        },
+        {
+          "@id": "https://www.jardins-provence-paysage.fr/#review-laurent-dubois"
+        },
+        {
+          "@id": "https://www.jardins-provence-paysage.fr/#review-christine-mercier"
+        },
+        {
+          "@id": "https://www.jardins-provence-paysage.fr/#review-jean-marc-vidal"
+        },
+        {
+          "@id": "https://www.jardins-provence-paysage.fr/#review-valerie-castellan"
+        }
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.jardins-provence-paysage.fr/#service-amenagement-jardin-mediterraneen",
+      "name": "Aménagement complet de jardin méditerranéen",
+      "serviceType": "Création de jardin méditerranéen",
+      "provider": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "areaServed": "Arles et Provence",
+      "url": "https://www.jardins-provence-paysage.fr/services/creation-jardin/amenagement-jardin-mediterraneen/",
+      "description": "Conception et réalisation de jardins méditerranéens adaptés à la sécheresse, avec végétaux locaux, minéral, ombre et entretien réduit."
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.jardins-provence-paysage.fr/#service-jardin-sec",
+      "name": "Jardin sec et rocaille provençale",
+      "serviceType": "Création de jardin sec",
+      "provider": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "areaServed": "Arles et Provence",
+      "url": "https://www.jardins-provence-paysage.fr/services/creation-jardin/jardin-sec-rocaille-provencale/",
+      "description": "Création de jardin sec sans arrosage intensif, avec graviers, enrochements, agaves, yuccas et plantes méditerranéennes."
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.jardins-provence-paysage.fr/#service-gazon-synthetique",
+      "name": "Pose de gazon synthétique",
+      "serviceType": "Installation de gazon synthétique",
+      "provider": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "areaServed": "Arles et Provence",
+      "url": "https://www.jardins-provence-paysage.fr/services/creation-jardin/gazon-synthetique/",
+      "description": "Pose de gazon synthétique pour jardin, contour de piscine et espaces de vie extérieurs."
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.jardins-provence-paysage.fr/#service-terrasse",
+      "name": "Terrasse bois et composite",
+      "serviceType": "Pose de terrasse extérieure",
+      "provider": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "areaServed": "Arles et Provence",
+      "url": "https://www.jardins-provence-paysage.fr/services/amenagements-exterieurs/terrasse-bois-composite/",
+      "description": "Pose de terrasses en bois exotique ou composite avec structure durable, finitions soignées et intégration paysagère."
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.jardins-provence-paysage.fr/#service-pergola",
+      "name": "Pergola bioclimatique et voile d’ombrage",
+      "serviceType": "Installation de pergola et ombrage",
+      "provider": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "areaServed": "Arles et Provence",
+      "url": "https://www.jardins-provence-paysage.fr/services/amenagements-exterieurs/pergola-voile-dombrage/",
+      "description": "Création de zones d’ombre avec pergolas bioclimatiques et voiles d’ombrage adaptées au climat provençal."
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.jardins-provence-paysage.fr/#service-eclairage",
+      "name": "Éclairage extérieur de jardin",
+      "serviceType": "Installation d’éclairage paysager",
+      "provider": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "areaServed": "Arles et Provence",
+      "url": "https://www.jardins-provence-paysage.fr/services/amenagements-exterieurs/eclairage-exterieur-jardin/",
+      "description": "Mise en lumière des allées, terrasses, piscines, massifs et arbres pour sécuriser et valoriser le jardin."
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.jardins-provence-paysage.fr/#service-arrosage",
+      "name": "Arrosage automatique intelligent",
+      "serviceType": "Installation d’arrosage automatique",
+      "provider": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "areaServed": "Arles et Provence",
+      "url": "https://www.jardins-provence-paysage.fr/services/arrosage-gestion-eau/arrosage-automatique/",
+      "description": "Installation de systèmes d’arrosage automatique intelligents, pilotables et économes en eau."
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.jardins-provence-paysage.fr/#service-goutte-a-goutte",
+      "name": "Installation de goutte-à-goutte",
+      "serviceType": "Arrosage localisé",
+      "provider": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "areaServed": "Arles et Provence",
+      "url": "https://www.jardins-provence-paysage.fr/services/arrosage-gestion-eau/goutte-a-goutte/",
+      "description": "Systèmes de goutte-à-goutte pour massifs, arbres, haies et végétaux méditerranéens."
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.jardins-provence-paysage.fr/#service-plantation-oliviers",
+      "name": "Plantation d’oliviers et d’arbres d’ornement",
+      "serviceType": "Plantation d’arbres",
+      "provider": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "areaServed": "Arles et Provence",
+      "url": "https://www.jardins-provence-paysage.fr/services/plantation-arbres-oliviers/plantation-oliviers-arbres/",
+      "description": "Plantation d’oliviers, arbres d’ornement et sujets méditerranéens avec préparation du sol et suivi de reprise."
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.jardins-provence-paysage.fr/#service-taille-oliviers",
+      "name": "Taille d’oliviers",
+      "serviceType": "Entretien d’oliviers",
+      "provider": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "areaServed": "Arles et Provence",
+      "url": "https://www.jardins-provence-paysage.fr/services/entretien-jardin/taille-oliviers/",
+      "description": "Taille d’oliviers pour esthétique, santé de l’arbre et optimisation de la production."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jardins-provence-paysage.fr/services/amenagements-exterieurs/terrasse-bois-composite/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://www.jardins-provence-paysage.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://www.jardins-provence-paysage.fr/services/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Aménagements Extérieurs",
+          "item": "https://www.jardins-provence-paysage.fr/services/amenagements-exterieurs/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Terrasse bois et composite",
+          "item": "https://www.jardins-provence-paysage.fr/services/amenagements-exterieurs/terrasse-bois-composite/"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jardins-provence-paysage.fr/services/arrosage-gestion-eau/arrosage-automatique/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://www.jardins-provence-paysage.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://www.jardins-provence-paysage.fr/services/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Arrosage et gestion de l’eau",
+          "item": "https://www.jardins-provence-paysage.fr/services/arrosage-gestion-eau/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Arrosage automatique intelligent",
+          "item": "https://www.jardins-provence-paysage.fr/services/arrosage-gestion-eau/arrosage-automatique/"
+        }
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.jardins-provence-paysage.fr/services/amenagements-exterieurs/terrasse-bois-composite/#webpage",
+      "url": "https://www.jardins-provence-paysage.fr/services/amenagements-exterieurs/terrasse-bois-composite/",
+      "name": "Terrasse bois et composite à Arles",
+      "isPartOf": {
+        "@id": "https://www.jardins-provence-paysage.fr/#website"
+      },
+      "about": {
+        "@id": "https://www.jardins-provence-paysage.fr/#service-terrasse"
+      },
+      "breadcrumb": {
+        "@id": "https://www.jardins-provence-paysage.fr/services/amenagements-exterieurs/terrasse-bois-composite/#breadcrumb"
+      },
+      "inLanguage": "fr-FR"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.jardins-provence-paysage.fr/services/arrosage-gestion-eau/arrosage-automatique/#webpage",
+      "url": "https://www.jardins-provence-paysage.fr/services/arrosage-gestion-eau/arrosage-automatique/",
+      "name": "Arrosage automatique intelligent à Arles",
+      "isPartOf": {
+        "@id": "https://www.jardins-provence-paysage.fr/#website"
+      },
+      "about": {
+        "@id": "https://www.jardins-provence-paysage.fr/#service-arrosage"
+      },
+      "breadcrumb": {
+        "@id": "https://www.jardins-provence-paysage.fr/services/arrosage-gestion-eau/arrosage-automatique/#breadcrumb"
+      },
+      "inLanguage": "fr-FR"
+    }
+  ]
+}

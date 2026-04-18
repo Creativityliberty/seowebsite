@@ -1,0 +1,35 @@
+User-agent: *
+Allow: /
+
+# Pages utiles
+Allow: /$
+Allow: /services/
+Allow: /realisations/
+Allow: /zones-intervention/
+Allow: /blog/
+Allow: /contact/
+Allow: /demande-devis/
+Allow: /prendre-rendez-vous/
+Allow: /faq/
+Allow: /a-propos/
+
+# Pages techniques ou faibles en intérêt SEO
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /cgi-bin/
+Disallow: /api/
+Disallow: /thank-you/
+Disallow: /merci/
+Disallow: /confirmation/
+Disallow: /preview/
+Disallow: /*?utm_
+Disallow: /*?fbclid=
+Disallow: /*?gclid=
+Disallow: /*?page=
+Disallow: /*?sort=
+Disallow: /*?filter=
+Disallow: /*?search=
+
+Sitemap: https://www.jardins-provence-paysage.fr/sitemap-index.xml

@@ -1,0 +1,305 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.jardins-provence-paysage.fr/#website",
+      "url": "https://www.jardins-provence-paysage.fr/",
+      "name": "Jardins Provence Paysage",
+      "alternateName": "Jardins Provence",
+      "description": "Paysagiste à Arles spécialisé en création de jardins méditerranéens, terrasses, arrosage automatique, plantations et aménagements extérieurs.",
+      "inLanguage": "fr-FR",
+      "publisher": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      }
+    },
+    {
+      "@type": [
+        "LocalBusiness",
+        "ProfessionalService",
+        "HomeAndConstructionBusiness",
+        "LandscapeDesigner"
+      ],
+      "@id": "https://www.jardins-provence-paysage.fr/#organization",
+      "name": "Jardins Provence Paysage",
+      "alternateName": "Jardins Provence",
+      "url": "https://www.jardins-provence-paysage.fr/",
+      "logo": "https://www.jardins-provence-paysage.fr/assets/logo-jardins-provence-paysage.png",
+      "image": [
+        "https://www.jardins-provence-paysage.fr/assets/hero-jardin-mediterraneen.jpg",
+        "https://www.jardins-provence-paysage.fr/assets/projet-piscine-arles.jpg",
+        "https://www.jardins-provence-paysage.fr/assets/terrasse-composite-maussane.jpg"
+      ],
+      "description": "Entreprise de paysagisme basée à Arles, spécialisée dans la création de jardins méditerranéens, l’aménagement autour de piscine, les terrasses bois et composite, l’arrosage automatique, les plantations d’oliviers et l’entretien de jardin.",
+      "telephone": "+33678923456",
+      "email": "contact@jardins-provence-paysage.fr",
+      "priceRange": "€€",
+      "slogan": "Votre paysagiste créateur de jardins méditerranéens depuis 15 ans",
+      "foundingDate": "2009",
+      "vatID": "FR45823456789",
+      "taxID": "82345678900015",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "34 Avenue Victor Hugo",
+        "addressLocality": "Arles",
+        "postalCode": "13200",
+        "addressRegion": "Bouches-du-Rhône",
+        "addressCountry": "FR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.6772,
+        "longitude": 4.6272
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Arles"
+        },
+        {
+          "@type": "City",
+          "name": "Saint-Rémy-de-Provence"
+        },
+        {
+          "@type": "City",
+          "name": "Maussane-les-Alpilles"
+        },
+        {
+          "@type": "City",
+          "name": "Fontvieille"
+        },
+        {
+          "@type": "City",
+          "name": "Mouriès"
+        },
+        {
+          "@type": "City",
+          "name": "Les Baux-de-Provence"
+        },
+        {
+          "@type": "City",
+          "name": "Tarascon"
+        },
+        {
+          "@type": "City",
+          "name": "Beaucaire"
+        },
+        {
+          "@type": "City",
+          "name": "Saintes-Maries-de-la-Mer"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Camargue"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Alpilles"
+        }
+      ],
+      "sameAs": [
+        "https://facebook.com/jardinsprovencepaysage",
+        "https://instagram.com/jardinsprovencepaysage",
+        "https://linkedin.com/company/jardinsprovencepaysage",
+        "https://pinterest.com/jardinsprovence"
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "08:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "09:00",
+          "closes": "13:00"
+        }
+      ],
+      "knowsAbout": [
+        "Création de jardin méditerranéen",
+        "Jardin sec",
+        "Terrasse bois",
+        "Terrasse composite",
+        "Pergola bioclimatique",
+        "Arrosage automatique",
+        "Plantation d’oliviers",
+        "Massifs méditerranéens",
+        "Aménagement autour de piscine",
+        "Entretien de jardin"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Services paysagers",
+        "itemListElement": [
+          {
+            "@type": "OfferCatalog",
+            "name": "Création de Jardin",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-amenagement-jardin-mediterraneen"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-jardin-sec"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-gazon-synthetique"
+                }
+              }
+            ]
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Aménagements Extérieurs",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-terrasse"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-pergola"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-eclairage"
+                }
+              }
+            ]
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Gestion de l’Eau",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-arrosage"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-goutte-a-goutte"
+                }
+              }
+            ]
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Plantation et Entretien",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-plantation-oliviers"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@id": "https://www.jardins-provence-paysage.fr/#service-taille-oliviers"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": 5,
+        "reviewCount": 5,
+        "bestRating": 5,
+        "worstRating": 5
+      },
+      "review": [
+        {
+          "@id": "https://www.jardins-provence-paysage.fr/#review-sylvie-bonnet"
+        },
+        {
+          "@id": "https://www.jardins-provence-paysage.fr/#review-laurent-dubois"
+        },
+        {
+          "@id": "https://www.jardins-provence-paysage.fr/#review-christine-mercier"
+        },
+        {
+          "@id": "https://www.jardins-provence-paysage.fr/#review-jean-marc-vidal"
+        },
+        {
+          "@id": "https://www.jardins-provence-paysage.fr/#review-valerie-castellan"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://www.jardins-provence-paysage.fr/blog/quelles-plantes-jardin-sans-eau-provence/#article",
+      "headline": "Top 10 des plantes qui survivent sans eau en Provence",
+      "url": "https://www.jardins-provence-paysage.fr/blog/quelles-plantes-jardin-sans-eau-provence/",
+      "author": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "publisher": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "inLanguage": "fr-FR",
+      "mainEntityOfPage": "https://www.jardins-provence-paysage.fr/blog/quelles-plantes-jardin-sans-eau-provence/",
+      "datePublished": "2024-06-01",
+      "dateModified": "2024-06-01",
+      "description": "Sélection de plantes résistantes à la sécheresse pour créer un jardin durable en Provence."
+    },
+    {
+      "@type": "Article",
+      "@id": "https://www.jardins-provence-paysage.fr/blog/prix-amenagement-jardin-500m2-arles/#article",
+      "headline": "Quel budget pour aménager un jardin de 500 m² à Arles ?",
+      "url": "https://www.jardins-provence-paysage.fr/blog/prix-amenagement-jardin-500m2-arles/",
+      "author": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "publisher": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "inLanguage": "fr-FR",
+      "mainEntityOfPage": "https://www.jardins-provence-paysage.fr/blog/prix-amenagement-jardin-500m2-arles/",
+      "datePublished": "2024-06-05",
+      "dateModified": "2024-06-05",
+      "description": "Guide budgétaire pour comprendre les coûts d’un aménagement paysager de 500 m² à Arles."
+    },
+    {
+      "@type": "Article",
+      "@id": "https://www.jardins-provence-paysage.fr/blog/bois-exotique-ou-composite-pour-terrasse-piscine/#article",
+      "headline": "Terrasse piscine : bois exotique ou composite ?",
+      "url": "https://www.jardins-provence-paysage.fr/blog/bois-exotique-ou-composite-pour-terrasse-piscine/",
+      "author": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "publisher": {
+        "@id": "https://www.jardins-provence-paysage.fr/#organization"
+      },
+      "inLanguage": "fr-FR",
+      "mainEntityOfPage": "https://www.jardins-provence-paysage.fr/blog/bois-exotique-ou-composite-pour-terrasse-piscine/",
+      "datePublished": "2024-06-10",
+      "dateModified": "2024-06-10",
+      "description": "Comparatif entre terrasse en bois exotique et terrasse en composite autour d’une piscine."
+    }
+  ]
+}
