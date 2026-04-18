@@ -2,33 +2,40 @@
 
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Download, FileJson, Loader2, FileCode, Zap, Eye, Code, Star, ChevronRight, CheckCircle2, Circle, Share2, ClipboardCheck, ArrowRight, AlertTriangle, ShieldCheck, Terminal, Layers, Activity, TrendingUp, Cpu } from 'lucide-react';
-import type { Blueprint, Variables, ContentPage } from '@/lib/types';
+import { 
+  ShieldCheck, Zap, Activity, TrendingUp, Cpu, 
+  Download, FileCode, CheckCircle2, ChevronRight, 
+  AlertTriangle, Boxes, Network, Search, Database,
+  Terminal as TerminalIcon, Sparkles, Code
+} from 'lucide-react';
+import type { Blueprint, Variables } from '@/lib/types';
 import { PocketFlow, ArchitectNode, BatchFillerNode, FinalizerNode } from '@/lib/flow';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import ReactMarkdown from 'react-markdown';
+import { AgentNode } from './components/AgentNode';
 
-// --- Tactical Components ---
+// --- Tactical Data ---
 
-const StepIndicator = ({ label, status, active }: { label: string, status: 'pending' | 'loading' | 'done', active: boolean }) => (
-  <div className={`flex flex-col items-center gap-3 transition-all duration-700 ${active ? 'opacity-100 scale-110' : 'opacity-20 scale-95'}`}>
-    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border-2 shadow-2xl ${status === 'done' ? 'bg-emerald-500 border-emerald-400 text-white' : status === 'loading' ? 'border-emerald-500 text-emerald-400 animate-pulse' : 'border-slate-700 text-slate-700'}`}>
-      {status === 'done' ? <CheckCircle2 size={24} /> : status === 'loading' ? <Loader2 size={24} className="animate-spin" /> : <Circle size={24} />}
-    </div>
-    <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${active ? 'text-emerald-400' : 'text-slate-500'}`}>{label}</span>
-  </div>
-);
+const CORE_AGENTS = [
+  { id: 'architect', label: 'A1: ARCHITECT', icon: Boxes, x: 0, y: -180 },
+  { id: 'squad-LEAD-1 (CORE)', label: 'A2: LEAD CORE', icon: ShieldCheck, x: -160, y: -80 },
+  { id: 'squad-LEAD-2 (SERVICES)', label: 'A3: LEAD SERV', icon: Zap, x: 160, y: -80 },
+  { id: 'squad-LEAD-3 (EXPERT)', label: 'A4: LEAD EXP', icon: Search, x: -220, y: 80 },
+  { id: 'squad-BULK-1 (SEO)', label: 'A5: BULK SEO', icon: Database, x: 0, y: 180 },
+  { id: 'squad-BULK-2 (DATA)', label: 'A6: BULK DATA', icon: Activity, x: 220, y: 80 },
+  { id: 'schema-expert', label: 'A7: SCHEMAS', icon: Code, x: -120, y: 280 },
+  { id: 'seo-auditor', label: 'A8: AUDITOR', icon: TrendingUp, x: 120, y: 280 },
+  { id: 'finalizer', label: 'A9: ASSEMBLER', icon: Network, x: 0, y: 0 },
+];
 
-const ValueCounter = ({ icon: Icon, label, value, color }: { icon: any, label: string, value: string | number, color: string }) => (
-  <div className="bg-slate-900/40 p-5 rounded-3xl border border-slate-800 flex items-center gap-5">
-    <div className={`w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500`}>
-      <Icon size={20} />
+const StatCard = ({ icon: Icon, label, value }: { icon: any, label: string, value: string | number }) => (
+  <div className="glass-symbiosis p-6 flex flex-col gap-2 border-white/5 bg-white/[0.02]">
+    <div className="w-8 h-8 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-500">
+      <Icon size={16} />
     </div>
-    <div>
-      <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">{label}</p>
-      <p className={`text-xl font-black text-slate-200`}>{value}</p>
-    </div>
+    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{label}</span>
+    <span className="text-2xl font-black text-white italic">{value}</span>
   </div>
 );
 
@@ -39,216 +46,238 @@ export default function Home() {
   const [progress, setProgress] = useState(0);
   const [logs, setLogs] = useState<string[]>([]);
   const [stats, setStats] = useState({ words: 0, files: 0, savings: 0 });
-  const [isCopied, setIsCopied] = useState(false);
-  const [errorStatus, setErrorStatus] = useState<string | null>(null);
+  const [currentActiveNode, setCurrentActiveNode] = useState<string | null>(null);
+  const [doneNodes, setDoneNodes] = useState<Set<string>>(new Set());
   
   const [generatedFiles, setGeneratedFiles] = useState<Record<string, string>>({});
-  const [blueprint, setBlueprint] = useState<Blueprint | null>(null);
-  const [variables, setVariables] = useState<Variables | null>(null);
-  
-  const [activeTab, setActiveTab] = useState<'agent' | 'output' | 'system'>('agent');
-  const [viewMode, setViewMode] = useState<'preview' | 'source'>('preview');
+  const [activeTab, setActiveTab] = useState<'mission' | 'vault' | 'system'>('mission');
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
-  const [selectedModel, setSelectedModel] = useState('gemini-3.1-pro-preview');
 
   const logEndRef = useRef<HTMLDivElement>(null);
   useEffect(() => { logEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [logs]);
 
-  const addLog = (msg: string) => setLogs(prev => [...prev, `> ${new Date().toLocaleTimeString()} | ${msg}`].slice(-12));
+  const addLog = (msg: string) => setLogs(prev => [...prev, `> ${msg}`].slice(-15));
 
   const handleGenerate = async () => {
     if (!prompt) return;
     setIsLoading(true);
-    setErrorStatus(null);
     setLogs([]);
-    setStats({ words: 0, files: 0, savings: 0 });
+    setDoneNodes(new Set());
     setStep('architecting');
     
     const flow = new PocketFlow({ baseUrl: window.location.origin });
     
     try {
-      addLog("Initialisation du moteur CORE V4...");
-      
-      // Node 1: Architect (A1)
+      addLog("CORE IGNITION STARTED...");
       flow.addNode(ArchitectNode(prompt, "gemini-3.1-pro-preview"));
       
       const intermediate = await flow.run(
-        (id) => { if (id === 'architect') setStep('architecting'); },
+        (id) => { 
+          setCurrentActiveNode(id);
+          if (id === 'architect') setStep('architecting'); 
+        },
         (msg) => addLog(msg)
       );
       
-      setBlueprint(intermediate.blueprint);
-      setVariables(intermediate.variables);
-      addLog("Architecture validée. Déploiement de la CORE SQUAD (Spark Era)...");
-      setStep('writing');
+      setDoneNodes(prev => new Set(prev).add('architect'));
 
-      // Nodes 2-6: Batch Squads (A2-A6)
-      // Batch 1 (Home/Services Core) - 3 Flash
+      const pages = intermediate.blueprint.contentPages || [];
       flow.addNode(BatchFillerNode("LEAD-1 (CORE)", [0, 1, 2], "gemini-3-flash-preview"));
-      // Batch 2 (Services) - 3 Flash
       flow.addNode(BatchFillerNode("LEAD-2 (SERVICES)", [3, 4, 5], "gemini-3-flash-preview"));
-      // Batch 3 (Expertise) - 3 Flash
       flow.addNode(BatchFillerNode("LEAD-3 (EXPERT)", [6, 7, 8], "gemini-3-flash-preview"));
-      // Batch 4 (Blog) - 3.1 Flash-Lite
       flow.addNode(BatchFillerNode("BULK-1 (SEO)", [9, 10, 11], "gemini-3.1-flash-lite-preview"));
-      // Batch 5 (Studies) - 3.1 Flash-Lite
       flow.addNode(BatchFillerNode("BULK-2 (DATA)", [12, 13, 14], "gemini-3.1-flash-lite-preview"));
-
-      // Node 7: Finalizer (A9)
       flow.addNode(FinalizerNode());
 
       const finalStore = await flow.run(
         (id, p) => {
-          if (id.startsWith('squad')) { setStep('writing'); setProgress(p); }
+          setCurrentActiveNode(id);
+          if (id.startsWith('squad')) setStep('writing');
           if (id === 'finalizer') setStep('finalizing');
+          setProgress(p);
         },
         (msg) => {
             addLog(msg);
             if (msg.includes("Terminé")) {
-                setStats(s => ({ 
-                    words: s.words + 3600, // Batch of 3
-                    files: s.files + 1, 
-                    savings: s.savings + 280 
-                }));
+                setStats(s => ({ words: s.words + 3600, files: s.files + 1, savings: s.savings + 280 }));
+                setDoneNodes(prev => new Set(prev).add(currentActiveNode || ''));
             }
         }
-      ).catch(e => {
-          addLog(`ERREUR CRITIQUE SQUAD : ${e.message}`);
-          throw e;
-      });
+      );
 
       setGeneratedFiles(finalStore.generatedFiles || {});
       setStep('done');
-      setActiveTab('output');
+      setActiveTab('vault');
       setSelectedFile(Object.keys(finalStore.generatedFiles || {})[0]);
     } catch (err: any) {
-      console.error(err);
-      setErrorStatus(err.message);
+      addLog(`CRITICAL FAILURE: ${err.message}`);
       setStep('idle');
     } finally {
       setIsLoading(false);
+      setCurrentActiveNode(null);
     }
   };
 
   const downloadZip = async () => {
-    if (!generatedFiles) return;
     const zip = new JSZip();
     Object.entries(generatedFiles).forEach(([p, c]) => zip.file(p, c));
     const blob = await zip.generateAsync({ type: 'blob' });
-    saveAs(blob, 'project-core-pack.zip');
+    saveAs(blob, 'core-pack-v5.zip');
   };
 
   return (
-    <main className="min-h-screen p-6 md:p-12 flex flex-col font-sans max-w-[1600px] mx-auto gap-8 bg-[#0b0f1a] text-slate-200">
-      <header className="flex flex-col lg:flex-row items-center justify-between gap-6 bg-slate-900/40 backdrop-blur-xl rounded-[2.5rem] p-6 px-10 border border-slate-800 shadow-2xl">
-        <div className="flex items-center space-x-6">
-           <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-700 rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-             <ShieldCheck className="text-white" size={24} />
-           </div>
-           <div>
-             <h1 className="text-2xl font-black tracking-tighter text-white uppercase italic">CORE <span className="text-emerald-500">ENGINE</span></h1>
-             <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em]">Proprietary SEO Agent v4.2 | Squad Mode</p>
-           </div>
-        </div>
-        <div className="flex p-1 bg-slate-950/50 rounded-xl border border-slate-800">
-             {(['agent', 'output', 'system'] as const).map(t => (
-               <button key={t} onClick={() => setActiveTab(t)} className={`px-8 py-2.5 rounded-lg text-[10px] font-black transition-all ${activeTab === t ? 'bg-emerald-600 text-white shadow-lg' : 'text-slate-500'}`}>
+    <main className="min-h-screen relative flex flex-col p-6 lg:p-12 overflow-hidden selection:bg-cyan-500/30">
+      <div className="bg-mesh" />
+
+      {/* Floating Header */}
+      <header className="fixed top-8 left-1/2 -translate-x-1/2 z-[100] w-full max-w-4xl px-4">
+        <div className="glass-symbiosis p-4 flex items-center justify-between shadow-2xl bg-white/[0.04]">
+          <div className="flex items-center gap-6 pl-4">
+            <div className="w-10 h-10 bg-cyan-500 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.5)]">
+              <ShieldCheck className="text-black" size={20} />
+            </div>
+            <div>
+              <h1 className="text-xl font-black text-white tracking-widest leading-none">CORE <span className="text-cyan-500 italic">ENGINE</span></h1>
+              <span className="text-[8px] font-black text-slate-500 uppercase tracking-[0.5em]">v5.0 Symbiosis</span>
+            </div>
+          </div>
+          <nav className="flex items-center gap-2 p-1 bg-black/40 rounded-full mr-2 border border-white/5">
+            {(['mission', 'vault', 'system'] as const).map(t => (
+              <button 
+                key={t} onClick={() => setActiveTab(t)}
+                className={`px-10 py-3 rounded-full text-[10px] font-black transition-all duration-500 ${activeTab === t ? 'bg-cyan-500 text-black glow-cyan' : 'text-slate-500 hover:text-slate-300'}`}
+              >
                 {t.toUpperCase()}
-               </button>
-             ))}
+              </button>
+            ))}
+          </nav>
         </div>
       </header>
-      
-      <div className="flex-1 rounded-[3rem] bg-slate-900/40 backdrop-blur-3xl border border-slate-800 shadow-3xl flex flex-col min-h-[750px] relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent" />
+
+      <div className="flex-1 mt-32 flex flex-col gap-8">
         <AnimatePresence mode="wait">
-          {activeTab === 'agent' && step === 'idle' && (
-            <motion.div key="p" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 flex flex-col items-center justify-center p-16">
-               <div className="max-w-4xl w-full text-center space-y-12">
-                  <h2 className="text-8xl font-black text-white tracking-tighter leading-none italic mb-4">
-                     CORE <span className="text-emerald-500">SQUAD</span> ACTIVATION.
-                  </h2>
-                  <p className="text-slate-500 text-xs font-black uppercase tracking-[0.5em] mb-8">Deploying 10 specialized agent shells</p>
-                  
-                  <div className="relative group">
-                    <textarea value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder="Identifiez la mission sémantique..." className="w-full h-80 rounded-[3rem] bg-[#05070a] border border-slate-700/50 p-12 text-2xl font-bold text-white focus:outline-none focus:border-emerald-500/50 transition-all shadow-2xl" />
-                    <button onClick={handleGenerate} className="absolute bottom-10 right-10 bg-emerald-600 hover:bg-emerald-500 text-white px-16 py-7 rounded-[2.5rem] font-black text-xl shadow-2xl flex items-center gap-4 transition-all">
-                       <Zap size={22} /> ENGAGER LA SQUAD
-                    </button>
-                  </div>
-                  {errorStatus && <div className="p-4 bg-red-500/10 text-red-500 rounded-2xl border border-red-500/20 font-black uppercase text-xs tracking-widest"><AlertTriangle size={16} className="inline mr-2" /> {errorStatus}</div>}
-               </div>
+          {activeTab === 'mission' && step === 'idle' && (
+            <motion.div key="m" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex-1 flex flex-col items-center justify-center">
+              <div className="w-full max-w-4xl space-y-12 text-center">
+                <h2 className="text-9xl font-black text-white tracking-tighter italic leading-none">
+                  LIQUID <span className="text-cyan-500">POWER.</span>
+                </h2>
+                <div className="relative group">
+                  <textarea 
+                    value={prompt} onChange={(e) => setPrompt(e.target.value)}
+                    placeholder="Describe your semantic target..."
+                    className="w-full h-96 glass-symbiosis p-12 text-2xl font-bold text-white focus:outline-none focus:border-cyan-500/50 transition-all shadow-3xl bg-black/40"
+                  />
+                  <button 
+                    onClick={handleGenerate}
+                    className="absolute bottom-12 right-12 bg-white text-black px-20 py-8 rounded-full font-black text-xl flex items-center gap-4 transition-all hover:scale-105 active:scale-95 group"
+                  >
+                    <Zap size={24} className="group-hover:text-cyan-600 transition-colors" /> ENGAGE SQUAD
+                  </button>
+                </div>
+              </div>
             </motion.div>
           )}
 
           {isLoading && (
-            <motion.div key="l" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 flex flex-col items-center justify-center bg-[#0b0f1a]/98 z-50 p-12">
-               <div className="w-full max-w-5xl flex flex-col gap-12">
-                  <div className="flex justify-between items-center px-12 lg:px-32">
-                    <StepIndicator label="A1: STRATÉGIE" status={step === 'architecting' ? 'loading' : 'done'} active={step === 'architecting'} />
-                    <StepIndicator label="A2-A6: SQUAD" status={step === 'writing' ? 'loading' : step === 'finalizing' || step === 'done' ? 'done' : 'pending'} active={step === 'writing'} />
-                    <StepIndicator label="A7: PACKAGING" status={step === 'finalizing' ? 'loading' : step === 'done' ? 'done' : 'pending'} active={step === 'finalizing'} />
+            <motion.div key="l" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col items-center justify-center min-h-[700px]">
+              <div className="w-full max-w-[1200px] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                {/* Visual Graph View */}
+                <div className="lg:col-span-8 relative h-[600px] flex items-center justify-center">
+                  <div className="absolute inset-0 bg-radial-gradient from-cyan-500/5 to-transparent blur-3xl" />
+                  <div className="relative w-full h-full">
+                    {/* Connection Filaments */}
+                    <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
+                      {CORE_AGENTS.map(agent => (
+                        <line key={agent.id} x1="50%" y1="50%" x2={`calc(50% + ${agent.x}px)`} y2={`calc(50% + ${agent.y}px)`} stroke="url(#line-grad)" strokeWidth="1" />
+                      ))}
+                      <defs>
+                        <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#06b6d4" stopOpacity="0" />
+                          <stop offset="50%" stopColor="#06b6d4" stopOpacity="1" />
+                          <stop offset="100%" stopColor="#06b6d4" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+
+                    {CORE_AGENTS.map(agent => (
+                      <AgentNode 
+                        key={agent.id} 
+                        {...agent} 
+                        status={doneNodes.has(agent.id) ? 'done' : currentActiveNode === agent.id ? 'loading' : 'pending'} 
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tactical Sidebar */}
+                <div className="lg:col-span-4 flex flex-col gap-6">
+                  <div className="grid grid-cols-1 gap-4">
+                    <StatCard icon={Activity} label="Words Stream" value={stats.words.toLocaleString()} />
+                    <StatCard icon={Cpu} label="Agents Pulse" value={stats.files} />
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                     <ValueCounter icon={Activity} label="Mots Sémantiques" value={stats.words.toLocaleString()} color="emerald" />
-                     <ValueCounter icon={Cpu} label="Agents Engagés" value={stats.files} color="emerald" />
-                     <ValueCounter icon={TrendingUp} label="Expertise SEO" value={`${stats.savings}€`} color="emerald" />
+                  {/* Terminal Mist */}
+                  <div className="glass-symbiosis p-8 h-80 bg-black/40 flex flex-col gap-4 border-white/5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-black tracking-[0.3em] text-cyan-500/50 uppercase">Neural Stream</span>
+                      <TerminalIcon size={14} className="text-cyan-500/20" />
+                    </div>
+                    <div className="flex-1 font-mono text-[10px] text-cyan-500/70 overflow-y-auto space-y-2 custom-scrollbar">
+                      {logs.map((log, i) => <div key={i} className="animate-in slide-in-from-left duration-300">{log}</div>)}
+                      <div ref={logEndRef} />
+                    </div>
                   </div>
 
-                  <div className="bg-[#05070a] rounded-[2rem] border border-slate-800 p-8 h-80 relative shadow-inner overflow-hidden">
-                     <div className="absolute top-0 right-0 p-4 flex gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                        <span className="text-[8px] font-black text-emerald-500 uppercase tracking-widest">Core Terminal Stream</span>
-                     </div>
-                     <div className="font-mono text-[10px] text-emerald-500/60 space-y-2 overflow-y-auto h-full pr-4 custom-scrollbar">
-                        {logs.map((log, i) => (
-                           <div key={i} className="animate-terminal-text border-l border-emerald-500/10 pl-3 lowercase opacity-80">{log}</div>
-                        ))}
-                        <div ref={logEndRef} />
-                     </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between text-[9px] font-black text-slate-500 uppercase tracking-widest px-2">
+                       <span>Total Progress</span>
+                       <span>{progress}%</span>
+                    </div>
+                    <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                      <motion.div className="h-full bg-cyan-500 shadow-[0_0_15px_#06b6d4]" animate={{ width: `${progress}%` }} />
+                    </div>
                   </div>
-                  
-                  <div className="text-center space-y-4">
-                     <p className="text-white font-black uppercase text-xs tracking-[0.5em] animate-pulse">Synchronisation des agents Spark...</p>
-                     <div className="h-1 w-full max-w-md mx-auto bg-slate-800 rounded-full overflow-hidden">
-                        <motion.div className="h-full bg-emerald-500 shadow-[0_0_10px_#10b981]" animate={{ width: `${progress}%` }} />
-                     </div>
-                  </div>
-               </div>
+                </div>
+              </div>
             </motion.div>
           )}
 
-          {activeTab === 'output' && !isLoading && (
-            <motion.div key="f" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 flex flex-row">
-               <aside className="w-[450px] border-r border-slate-800/50 bg-[#0d121f] p-10 flex flex-col gap-6">
-                <button onClick={downloadZip} className="bg-emerald-600 text-white p-5 rounded-2xl font-black shadow-2xl flex items-center justify-center gap-3 hover:bg-emerald-500 pointer transition-all">
-                   <Download size={20} /> TÉLÉCHARGER LE PAQUET
+          {activeTab === 'vault' && !isLoading && (
+            <motion.div key="v" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col lg:flex-row gap-8">
+              <aside className="w-full lg:w-96 flex flex-col gap-6">
+                <button 
+                  onClick={downloadZip}
+                  className="glass-symbiosis p-8 bg-white text-black font-black uppercase tracking-widest hover:bg-cyan-500 transition-all flex items-center justify-center gap-4 group"
+                >
+                  <Download size={20} className="group-hover:bounce" /> Export Pack
                 </button>
-                <div className="flex-1 overflow-y-auto custom-scrollbar space-y-2 pr-2">
-                  {Object.keys(generatedFiles).sort().map(k => (
-                    <button key={k} onClick={() => setSelectedFile(k)} className={`w-full text-left p-4 rounded-xl font-black text-[11px] flex items-center justify-between border transition-all ${selectedFile === k ? 'bg-emerald-600/10 border-emerald-500/50 text-emerald-400' : 'bg-slate-800/10 border-transparent text-slate-500 hover:text-slate-300'}`}>
-                      <span className="truncate">{k.split('/').pop()}</span>
+                <div className="flex-1 glass-symbiosis bg-black/20 p-6 overflow-y-auto custom-scrollbar border-white/5 space-y-2">
+                  {Object.keys(generatedFiles).sort().map(f => (
+                    <button 
+                      key={f} onClick={() => setSelectedFile(f)}
+                      className={`w-full text-left p-4 rounded-3xl text-[10px] font-black transition-all uppercase tracking-widest ${selectedFile === f ? 'bg-cyan-500 text-black glow-cyan' : 'text-slate-500 hover:text-slate-300 bg-white/5'}`}
+                    >
+                      {f.split('/').pop()}
                     </button>
                   ))}
                 </div>
               </aside>
-              <main className="flex-1 p-10 bg-[#0b0f1a] overflow-auto">
-                 <div className="rounded-[2.5rem] bg-[#0d121f] border border-slate-800 p-16 min-h-full prose prose-invert prose-emerald max-w-none">
-                    {selectedFile && <ReactMarkdown>{generatedFiles[selectedFile]}</ReactMarkdown>}
-                 </div>
+              <main className="flex-1 glass-symbiosis bg-black/40 p-12 overflow-auto border-white/5">
+                <div className="prose prose-invert prose-cyan max-w-none">
+                   {selectedFile && <ReactMarkdown>{generatedFiles[selectedFile]}</ReactMarkdown>}
+                </div>
               </main>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar { width: 3px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(16, 185, 129, 0.3); border-radius: 10px; }
-        @keyframes terminal-text { from { opacity: 0; transform: translateX(-4px); } to { opacity: 1; transform: translateX(0); } }
-        .animate-terminal-text { animation: terminal-text 0.2s ease-out forwards; }
-      `}</style>
+      <footer className="mt-8 flex justify-between px-4 text-[8px] font-black text-slate-600 uppercase tracking-[0.5em]">
+         <span>Core Engine © 2026</span>
+         <span>Encrypted Neural Link Active</span>
+      </footer>
     </main>
   );
 }
