@@ -70,11 +70,13 @@ export async function POST(req: Request) {
         }
       ],
       config: {
-        systemInstruction: "You are a Senior Technical SEO Architect. Output exactly 15 pages in JSON format.",
+        systemInstruction: "You are a Senior Technical SEO Architect. Use GOOGLE SEARCH to identify top competitors, current trends, and 'People Also Ask' questions related to the prompt. Then, design an Elite SEO Blueprint with exactly 15 pages. Output in JSON format.",
         responseMimeType: "application/json",
         // @ts-ignore
         responseJsonSchema: fullBlueprintSchema,
-      }
+      },
+      // @ts-ignore
+      tools: [{ googleSearchRetrieval: {} }]
     });
 
     const rawText = response.text;

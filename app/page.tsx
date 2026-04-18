@@ -99,9 +99,15 @@ export default function Home() {
         (msg) => {
             addLog(msg);
             if (msg.includes("Terminé")) {
-                setStats(s => ({ words: s.words + 3600, files: s.files + 1, savings: s.savings + 280 }));
+                setStats(s => ({ 
+                    words: s.words + 3600, // Batch of 3
+                    files: s.files + 1, 
+                    savings: s.savings + 280 
+                }));
                 setDoneNodes(prev => new Set(prev).add(currentActiveNode || ''));
             }
+            if (msg.includes("Recherche")) addLog("SCANNING GOOGLE SERP (GROUNDING)...");
+            if (msg.includes("Crawl")) addLog("EXTRACTING COMPETITOR MARKDOWN (FIRECRAWL)...");
         }
       );
 
