@@ -297,6 +297,78 @@ export default function Home() {
               </main>
             </motion.div>
           )}
+          {activeTab === 'system' && (
+            <motion.div key="s" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2 space-y-8">
+                <div className="glass-symbiosis p-12 bg-black/40 border-white/5">
+                  <h3 className="text-2xl font-black text-white italic mb-8 flex items-center gap-4">
+                    <Cpu className="text-cyan-500" /> SYSTEM DIAGNOSTICS
+                  </h3>
+                  <div className="grid grid-cols-2 gap-8">
+                    <div className="space-y-2">
+                      <span className="text-[10px] font-black text-slate-500 uppercase">Core Framework</span>
+                      <div className="text-white font-mono">PocketFlow v2.1.0</div>
+                    </div>
+                    <div className="space-y-2">
+                      <span className="text-[10px] font-black text-slate-500 uppercase">Neural Engine</span>
+                      <div className="text-white font-mono">Gemini 3.1 Pro Symbiosis</div>
+                    </div>
+                    <div className="space-y-2">
+                      <span className="text-[10px] font-black text-slate-500 uppercase">Latency</span>
+                      <div className="text-cyan-500 font-mono">24ms (Optimized)</div>
+                    </div>
+                    <div className="space-y-2">
+                      <span className="text-[10px] font-black text-slate-500 uppercase">Storage</span>
+                      <div className="text-white font-mono">Virtual Obsidian Vault</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="glass-symbiosis p-12 bg-black/40 border-white/5">
+                  <h3 className="text-2xl font-black text-white italic mb-8 flex items-center gap-4">
+                    <Network className="text-cyan-500" /> SQUAD REGISTRY
+                  </h3>
+                  <div className="space-y-4">
+                    {CORE_AGENTS.map(agent => (
+                      <div key={agent.id} className="flex items-center justify-between p-4 border border-white/5 rounded-2xl bg-white/[0.02]">
+                        <div className="flex items-center gap-4">
+                          <agent.icon size={16} className="text-cyan-500" />
+                          <span className="text-[10px] font-bold text-white tracking-widest">{agent.label}</span>
+                        </div>
+                        <span className="text-[8px] font-black text-emerald-500 bg-emerald-500/10 px-3 py-1 rounded-full">ACTIVE</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-8">
+                <div className="glass-symbiosis p-12 bg-cyan-500 text-black shadow-[0_0_50px_rgba(6,182,212,0.3)]">
+                  <h3 className="text-xl font-black italic mb-4">NEURAL LINK</h3>
+                  <p className="text-[10px] font-bold leading-relaxed">
+                    CONNECTION STABLE. ALL AGENTS SYNCHRONIZED. GROUNDING TOOLS ACTIVE.
+                  </p>
+                </div>
+                <div className="glass-symbiosis p-12 bg-black/60 border-white/10">
+                  <h3 className="text-xs font-black text-white italic mb-6">ENVIRONMENT</h3>
+                  <div className="space-y-4 font-mono text-[9px]">
+                    <div className="flex justify-between border-b border-white/5 pb-2">
+                      <span className="text-slate-500">GEMINI_KEY</span>
+                      <span className="text-white">AIzaSy...****</span>
+                    </div>
+                    <div className="flex justify-between border-b border-white/5 pb-2">
+                      <span className="text-slate-500">FIRECRAWL_KEY</span>
+                      <span className="text-white">fc-dc6a...****</span>
+                    </div>
+                    <div className="flex justify-between border-b border-white/5 pb-2">
+                      <span className="text-slate-500">RUNTIME</span>
+                      <span className="text-white">VERCEL_EDGE</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
 
