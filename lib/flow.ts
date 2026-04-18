@@ -64,7 +64,12 @@ export const ResearchNode = (prompt: string): FlowNode => ({
       body: JSON.stringify({ prompt })
     });
     const data = await res.json();
-    store.researchContext = data.research;
+    if (!data.research || data.research.trim() === "") {
+        console.warn(">>> [FLOW] Research (A0) returned empty context. Proceeding with default knowledge.");
+        store.researchContext = "Aucun contexte de recherche trouvé. Utilise tes connaissances internes.";
+    } else {
+        store.researchContext = data.research;
+    }
   }
 });
 

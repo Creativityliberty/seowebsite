@@ -60,6 +60,23 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<'mission' | 'vault' | 'system'>('mission');
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
 
+  useEffect(() => {
+    const syncVault = async () => {
+      try {
+        const res = await fetch('/api/vault');
+        const data = await res.json();
+        if (data.files) {
+          setGeneratedFiles(data.files);
+          const first = Object.keys(data.files).sort()[0];
+          if (first) setSelectedFile(first);
+        }
+      } catch (e) {
+        console.error("Vault sync failed", e);
+      }
+    };
+    syncVault();
+  }, []);
+
   const logEndRef = useRef<HTMLDivElement>(null);
   useEffect(() => { logEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [logs]);
 
@@ -323,7 +340,7 @@ export default function Home() {
                     </div>
                     <div className="space-y-2">
                       <span className="text-[10px] font-black text-slate-500 uppercase">Storage</span>
-                      <div className="text-white font-mono">Virtual Obsidian Vault</div>
+                      <div className="text-white font-mono">{Object.keys(generatedFiles).length} Files Encrypted</div>
                     </div>
                   </div>
                 </div>
