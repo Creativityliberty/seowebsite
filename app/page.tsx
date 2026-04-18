@@ -39,6 +39,13 @@ const StatCard = ({ icon: Icon, label, value }: { icon: any, label: string, valu
   </div>
 );
 
+const StepIndicator = ({ label, status, active }: { label: string, status: 'pending' | 'loading' | 'done', active: boolean }) => (
+  <div className={`flex flex-col items-center gap-3 transition-all duration-700 ${active ? 'scale-110' : 'scale-100 opacity-40'}`}>
+    <div className={`w-3 h-3 rounded-full ${status === 'done' ? 'bg-emerald-500 shadow-[0_0_15px_#10b981]' : status === 'loading' ? 'bg-cyan-500 animate-pulse shadow-[0_0_15px_#06b6d4]' : 'bg-slate-700'}`} />
+    <span className="text-[8px] font-black text-white uppercase tracking-widest whitespace-nowrap">{label}</span>
+  </div>
+);
+
 export default function Home() {
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -69,11 +76,17 @@ export default function Home() {
     
     try {
       addLog("CORE IGNITION STARTED...");
+      
+      // Node 0: Research (A0)
+      flow.addNode(ResearchNode(prompt));
+      
+      // Node 1: Architect (A1)
       flow.addNode(ArchitectNode(prompt, "gemini-3.1-pro-preview"));
       
       const intermediate = await flow.run(
         (id) => { 
           setCurrentActiveNode(id);
+          if (id === 'research') addLog("SCANNING GOOGLE SERP (A0)...");
           if (id === 'architect') setStep('architecting'); 
         },
         (msg) => addLog(msg)
@@ -219,6 +232,13 @@ export default function Home() {
 
                 {/* Tactical Sidebar */}
                 <div className="lg:col-span-4 flex flex-col gap-6">
+                  <div className="flex justify-between items-center px-4 py-6 border-b border-white/5 mb-4">
+                    <StepIndicator label="A0: RESEARCH" status={currentActiveNode === 'research' ? 'loading' : doneNodes.has('research') ? 'done' : 'pending'} active={currentActiveNode === 'research'} />
+                    <StepIndicator label="A1: STRATEGY" status={currentActiveNode === 'architect' ? 'loading' : doneNodes.has('architect') ? 'done' : 'pending'} active={currentActiveNode === 'architect'} />
+                    <StepIndicator label="A2-A6: SQUAD" status={step === 'writing' ? 'loading' : step === 'finalizing' || step === 'done' ? 'done' : 'pending'} active={step === 'writing'} />
+                    <StepIndicator label="A7: PACKAGING" status={step === 'finalizing' ? 'loading' : step === 'done' ? 'done' : 'pending'} active={step === 'finalizing'} />
+                  </div>
+                  
                   <div className="grid grid-cols-1 gap-4">
                     <StatCard icon={Activity} label="Words Stream" value={stats.words.toLocaleString()} />
                     <StatCard icon={Cpu} label="Agents Pulse" value={stats.files} />

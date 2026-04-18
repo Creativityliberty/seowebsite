@@ -56,12 +56,27 @@ export class PocketFlow {
 }
 
 // EXAMPLE PRESET NODES FOR SEO
+export const ResearchNode = (prompt: string): FlowNode => ({
+  id: "research",
+  exec: async (store) => {
+    const res = await fetch(`${store.baseUrl}/api/research`, {
+      method: "POST",
+      body: JSON.stringify({ prompt })
+    });
+    const data = await res.json();
+    store.researchContext = data.research;
+  }
+});
+
 export const ArchitectNode = (prompt: string, model: string): FlowNode => ({
   id: "architect",
   exec: async (store) => {
     const res = await fetch(`${store.baseUrl}/api/generate`, {
       method: "POST",
-      body: JSON.stringify({ prompt, model })
+      body: JSON.stringify({ 
+        prompt: `Sujet: ${prompt}\n\nContexte de recherche Google :\n${store.researchContext || "Aucun contexte fourni."}`, 
+        model 
+      })
     });
     const data = await res.json();
     store.blueprint = data.blueprint;

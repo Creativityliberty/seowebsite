@@ -70,13 +70,11 @@ export async function POST(req: Request) {
         }
       ],
       config: {
-        systemInstruction: "You are a Senior Technical SEO Architect. Use GOOGLE SEARCH to identify top competitors, current trends, and 'People Also Ask' questions related to the prompt. Then, design an Elite SEO Blueprint with exactly 15 pages. Output in JSON format.",
+        systemInstruction: "You are a Senior Technical SEO Architect. Use the provided RESEARCH CONTEXT to design an Elite SEO Blueprint with exactly 15 pages. Every page must be perfectly SEO optimized. Output in JSON format.",
         responseMimeType: "application/json",
         // @ts-ignore
         responseJsonSchema: fullBlueprintSchema,
-      },
-      // @ts-ignore
-      tools: [{ googleSearchRetrieval: {} }]
+      }
     });
 
     const rawText = response.text;
